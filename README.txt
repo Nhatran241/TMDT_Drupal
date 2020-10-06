@@ -1,3 +1,6 @@
+// GUIDE
+https://weebpal.com/guides/drupal-8-marketplace-theme-guide-developers?fbclid=IwAR3mlxTpOCrnQ2oiMr1tPTU5yjTOF6k6Ys9z-kUa1Ybhp7SvhAvK28orfjM
+
 
 CONTENTS OF THIS FILE
 ---------------------
