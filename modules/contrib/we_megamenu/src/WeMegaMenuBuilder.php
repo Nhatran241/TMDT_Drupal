@@ -2,8 +2,6 @@
 
 namespace Drupal\we_megamenu;
 
-use Drupal\block\Entity\Block;
-use Drupal\views\Views;
 use Drupal;
 use Drupal\Core\Menu\MenuTreeParameters;
 
@@ -13,7 +11,7 @@ class WeMegaMenuBuilder {
    *
    * @param string $menu_name
    *   Public static function getMenuTree menu_name.
-   * @param \Drupal\Core\Menu\MenuLinkTreeElement $items
+   * @param array $items
    *   Public static function getMenuTree items.
    * @param int $level
    *   Public static function getMenuTree level.
@@ -21,22 +19,13 @@ class WeMegaMenuBuilder {
    * @return array
    *   Public static function getMenuTree array.
   */
-  public static function getMenuTree($menu_name, $backend = TRUE, $items = [], $level = 0) {
+  public static function getMenuTree($menu_name, $items = [], $level = 0) {
     $result = [];
     if ($level == 0) {
       $menu_active_trail = Drupal::service('menu.active_trail')->getActiveTrailIds($menu_name);
       $menu_tree_parameters = (new MenuTreeParameters)->setActiveTrail($menu_active_trail)->onlyEnabledLinks();
-      $menu_tree = \Drupal::menuTree();
-      $tree = $menu_tree->load($menu_name, $menu_tree_parameters);
-      $manipulators = [
-        ['callable' => 'menu.default_tree_manipulators:checkAccess'],
-      ];
-      $tree = $menu_tree->transform($tree, $manipulators);
-
+      $tree = Drupal::menuTree()->load($menu_name, $menu_tree_parameters);
       foreach ($tree as $item) {
-        if ($backend === FALSE && !$item->access->isAllowed()) {
-          continue;
-        }
         $route_name = $item->link->getPluginDefinition()['route_name'];
         $result[] = [
           'derivativeId' => $item->link->getDerivativeId(),
@@ -45,7 +34,7 @@ class WeMegaMenuBuilder {
           'description' => $item->link->getDescription(),
           'weight' => $item->link->getWeight(),
           'url' => $item->link->getUrlObject()->toString(),
-          'subtree' => self::getMenuTree($menu_name, $backend, $item, $level + 1),
+          'subtree' => self::getMenuTree($menu_name, $item, $level + 1),
           'route_name' => $route_name,
           'in_active_trail' => $item->inActiveTrail,
           'plugin_id' => $item->link->getPluginId(),
@@ -55,9 +44,6 @@ class WeMegaMenuBuilder {
     else {
       if ($items->hasChildren) {
         foreach ($items->subtree as $key_item => $item) {
-          if ($backend === FALSE && !$item->access->isAllowed()) {
-            continue;
-          }
           $route_name = $item->link->getPluginDefinition()['route_name'];
           $result[] = [
             'derivativeId' => $item->link->getDerivativeId(),
@@ -66,7 +52,7 @@ class WeMegaMenuBuilder {
             'description' => $item->link->getDescription(),
             'weight' => $item->link->getWeight(),
             'url' => $item->link->getUrlObject()->toString(),
-            'subtree' => self::getMenuTree($menu_name, $backend, $item, $level + 1),
+            'subtree' => self::getMenuTree($menu_name, $item, $level + 1),
             'route_name' => $route_name,
             'in_active_trail' => $item->inActiveTrail,
             'plugin_id' => $item->link->getPluginId(),
@@ -93,8 +79,8 @@ class WeMegaMenuBuilder {
    * @return array
    *   Public static function getMenuTreeOrder array.
   */
-  public static function getMenuTreeOrder($menu_name, $backend, $items = [], $level = 0) {
-    $menu = self::getMenuTree($menu_name, $backend, $items = [], $level = 0);
+  public static function getMenuTreeOrder($menu_name, $items = [], $level = 0) {
+    $menu = self::getMenuTree($menu_name, $items = [], $level = 0);
     return self::sortMenuDeep($menu);
   }
 
@@ -241,7 +227,7 @@ class WeMegaMenuBuilder {
   public static function renderBlock($bid, $title_enable = TRUE, $section = '') {
     $html = '';
     if ($bid && !empty($bid)) {
-      $block = Block::load($bid);
+      $block = \Drupal\block\Entity\Block::load($bid);
       if (isset($block) && !empty($block)) {
         $title = $block->label();
         $block_content = Drupal::entityTypeManager()
@@ -716,10 +702,10 @@ class WeMegaMenuBuilder {
     $entity_manager = Drupal::entityTypeManager();
     $views = $entity_manager->getStorage('view')->loadMultiple();
     foreach ($views as $key => $view) {
-      $view = Views::getView($key);
+      $view = \Drupal\views\Views::getView($key);
       $a = $view->render();
       if ($a) {
-        echo \Drupal::service('renderer')->render($view);
+        echo drupal_render($view);
         exit;
       }
     }
