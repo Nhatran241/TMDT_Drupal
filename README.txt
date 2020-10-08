@@ -19,3 +19,7 @@ max_allowed_packet = 1024M
 //admin account
 username : admin
 password : admin
+
+//paypal test account
+username : sb-evj1w3396824@personal.example.com
+password : bYK8EJ_x
