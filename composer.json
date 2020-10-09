@@ -19,6 +19,8 @@
         "drupal/admin_toolbar": "^2.3",
         "drupal/commerce": "^2.21",
         "drupal/commerce_paypal": "^1.0@beta",
+        "drupal/commerce_simple_stock": "^1.0",
+        "drupal/commerce_stock": "^1.0@alpha",
         "drupal/core-composer-scaffold": "^8.8",
         "drupal/core-project-message": "^8.8",
         "drupal/core-recommended": "^8.8",
