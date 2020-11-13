@@ -267,8 +267,7 @@ function template_preprocess_taxonomy_term(&$variables) {
   $variables['term'] = $variables['elements']['#taxonomy_term'];
   /** @var \Drupal\taxonomy\TermInterface $term */
   $term = $variables['term'];
-
-  $variables['url'] = !$term->isNew() ? $term->toUrl()->toString() : NULL;
+  $variables['url'] = !$term->isNew() ?$term->toUrl()->toString()  : NULL;
 
   // Make name field available separately.  Skip this custom preprocessing if
   // the field display is configurable and skipping has been enabled.
