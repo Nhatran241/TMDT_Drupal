@@ -1,0 +1,1 @@
+window.drupalTranslations = {"strings":{"":{"Home":"Trang ch\u1ee7","closed":"\u0110\u00f3ng","Cancel":"H\u1ee7y"}},"pluralFormula":{"default":0}};
