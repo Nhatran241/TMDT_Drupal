@@ -1,0 +1,13 @@
+name: 'Commerce MoMo'
+type: module
+description: 'This module integrate MoMo Payment Platform to Drupal Commerce payment system.'
+core: 8.x
+package: 'Commerce'
+dependencies:
+  - commerce:commerce
+  - commerce:commerce_payment
+
+# Information added by Drupal.org packaging script on 2019-08-22
+version: '8.x-1.0-beta1'
+project: 'commerce_momo'
+datestamp: 1566516807

@@ -1,0 +1,15 @@
+commerce_payment.commerce_payment_gateway.plugin.commerce_momo:
+  type: commerce_payment_gateway_configuration
+  mapping:
+    api_endpoint:
+      type: string
+      label: 'API Endpoint'
+    partner_code:
+      type: string
+      label: 'Partner Code'
+    access_key:
+      type: string
+      label: 'Access Key'
+    secret_key:
+      type: string
+      label: 'Secret Key'

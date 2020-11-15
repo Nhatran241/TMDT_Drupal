@@ -1,0 +1,7 @@
+services:
+  logger.channel.commerce_momo:
+    parent: logger.channel_base
+    arguments: ['commerce_momo']
+  commerce_momo.momo_aio:
+    class: Drupal\commerce_momo\MoMo\AllInOnePayGate
+    arguments: ['@entity_type.manager', '@config.manager', '@http_client']
