@@ -23,6 +23,9 @@ password : admin
 username : sb-evj1w3396824@personal.example.com
 password : bYK8EJ_x
 
+//Google capcha for gmail account
+https://accounts.google.com/DisplayUnlockCaptcha
+
 CONTENTS OF THIS FILE
 ---------------------
 
